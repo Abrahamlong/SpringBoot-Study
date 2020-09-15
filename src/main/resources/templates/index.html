@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>shouye</title>
+</head>
+<body>
+<h1 th:text="${msg}"></h1>
+<div th:text="${msg}"></div>
+<h3 th:each="user:${users}" th:text="${user}"></h3>
+</body>
+</html>

@@ -1,0 +1,33 @@
+# web项目启动端口号
+#server:
+#  port: 8088
+
+#查看哪些自动配置类生效哪些是未生效的
+#debug: true
+
+#配置开发环境
+spring:
+  profiles:
+    active: dev
+
+dog:
+  name: 旺财
+  age: 3
+
+person:
+  name: long
+  names: abraham
+  age: ${random.int}
+  happy: true
+  date: 2020/9/2
+  birth: ${person.date}
+  maps: {k1: v1,k2: v2}
+  list:
+    - nice
+    - music
+    - girl
+  dog:
+    name: ${dog.name}_${person.names}
+    age: 3
+
+
