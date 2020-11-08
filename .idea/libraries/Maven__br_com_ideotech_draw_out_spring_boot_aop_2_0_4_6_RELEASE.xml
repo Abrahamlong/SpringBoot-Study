@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: br.com.ideotech:draw-out-spring-boot-aop:2.0.4-6.RELEASE">
     <CLASSES>
-      <root url="jar://D:/maven_local_repository/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://D:/maven_local_repository/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://D:/maven_local_repository/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/br/com/ideotech/draw-out-spring-boot-aop/2.0.4-6.RELEASE/draw-out-spring-boot-aop-2.0.4-6.RELEASE-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

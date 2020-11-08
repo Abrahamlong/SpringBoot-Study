@@ -11,7 +11,7 @@ import java.util.Arrays;
  * @version 1.0.0
  * @date 2020/9/3
  */
-//在templates目录下的缩影界面只能通过controller来跳转
+//在templates目录下的所有界面只能通过controller来跳转
 //这个需要模板引擎的支持：thymeleaf
 @Controller
 public class IndexController {
