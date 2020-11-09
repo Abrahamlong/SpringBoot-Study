@@ -9,6 +9,13 @@
 spring:
   profiles:
     active: dev
+  thymeleaf:
+    cache: false
+# 国际化配置文件的位置
+  messages:
+    basename: i18n.login
+
+
 
 dog:
   name: 旺财

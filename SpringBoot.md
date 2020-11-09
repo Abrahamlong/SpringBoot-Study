@@ -968,7 +968,7 @@ debug=true
 
 ----
 
-## 6. SpringBoot：Web开发
+## 6. SpringBoot：Web开发探究
 
 ### 6.1 静态资源处理
 
@@ -1288,6 +1288,139 @@ public class MyMvcConfig implements WebMvcConfigurer {
 ![image-20201108114552006](C:\Users\abraham\AppData\Roaming\Typora\typora-user-images\image-20201108114552006.png)
 
 **跳转成功；所以说，我们要扩展SpringMVC，官方就推荐我们这么去使用，既保SpringBoot留所有的自动配置，也能用我们扩展的配置！**
+
+==【实践：https://blog.csdn.net/qq_45173404/article/details/108934414】==
+
+
+
+## 7. SpringBoot：页面国际化
+
+有的时候，我们的网站会去涉及中英文甚至多语言的切换，这时候我们就需要学习国际化了！
+
+## 7.1 配置文件编写
+
+1. 我们在resources资源文件下新建一个i18n目录，存放国际化配置文件;
+
+2. 建立一个login.properties文件，还有一个login_zh_CN.properties；发现IDEA自动识别了我们要做国际化操作；文件夹变了！
+
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTkwNTA1My8yMDIwMDQvMTkwNTA1My0yMDIwMDQxMjIyNTE0MTg3Ni0xMzA3NjA4MTM3LnBuZw?x-oss-process=image/format,png)
+
+3. 我们可以在这上面去新建一个文件；
+
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTkwNTA1My8yMDIwMDQvMTkwNTA1My0yMDIwMDQxMjIyNTE1NDg4OS0xNTI0NjUzNDQ5LnBuZw?x-oss-process=image/format,png)
+
+弹出如下页面：我们再添加一个英文的；
+
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTkwNTA1My8yMDIwMDQvMTkwNTA1My0yMDIwMDQxMjIyNTIwNzYwNC0xMjM4NDUxNTY4LnBuZw?x-oss-process=image/format,png)
+
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTkwNTA1My8yMDIwMDQvMTkwNTA1My0yMDIwMDQxMjIyNTIyMTA2NS04ODczOTg2NTUucG5n?x-oss-process=image/format,png)
+
+**4. 接下来，我们就来编写配置，我们可以看到idea下面有另外一个视图；**
+
+![img](https://imgconvert.csdnimg.cn/aHR0cHM6Ly9pbWcyMDIwLmNuYmxvZ3MuY29tL2Jsb2cvMTkwNTA1My8yMDIwMDQvMTkwNTA1My0yMDIwMDQxMjIyNTIzNDQ0MS0yNTg1OTA5NTIucG5n?x-oss-process=image/format,png)
+
+这个视图我们点击 + 号就可以直接添加属性了；配置文件编写如下：
+
+login.properties ：默认
+
+```properties
+login.btn=登录
+login.password=密码
+login.remember=记住我
+login.tip=请登录
+login.username=用户名
+```
+
+英文：
+
+```properties
+login.btn=Sign in
+login.password=Password
+login.remember=Remember me
+login.tip=Please sign in
+login.username=Username
+```
+
+中文：
+
+```properties
+login.btn=登录
+login.password=密码
+login.remember=记住我
+login.tip=请登录
+login.username=用户名
+```
+
+
+
+### 13.2 配置页面国际化值
+
+- #### 首先要在SpringBoot配置文件中配置我们刚写的配置文件路径
+
+```yml
+spring:
+# 国际化配置文件的位置
+  messages:
+    basename: i18n.login
+```
+
+- #### 去页面获取国际化的值：#{…}
+
+![image-20201109150149785](C:\Users\A80024\AppData\Roaming\Typora\typora-user-images\image-20201109150149785.png)
+
+- #### 访问验证
+
+![image-20201109150207721](C:\Users\A80024\AppData\Roaming\Typora\typora-user-images\image-20201109150207721.png)
+
+### 13.5 配置国际化解析
+
+- #### 修改一下前端页面的跳转链接
+
+```html
+<!-- 这里传入参数不需要使用？ 直接使用（key=value）-->
+<a class="btn btn-sm" th:href="@{/index.html(lang='zh_CN')}">中文</a>
+<a class="btn btn-sm" th:href="@{/index.html(lang='en_US')}">English</a>
+```
+
+- #### 编写自定义的处理国际化的配置类
+
+```java
+public class MyLocaleResolver implements LocaleResolver {
+
+    // 解析请求
+    @Override
+    public Locale resolveLocale(HttpServletRequest request) {
+
+        // 去获取请求中的语言参数
+        String language = request.getParameter("lang");
+        Locale locale = Locale.getDefault(); // 如果没有获取到就使用系统默认的
+        // 如果请求的链接参数“lang”不为空
+        if (!StringUtils.isEmpty(language)){
+            // 分割请求参数 zh_CN  en_US
+            String[] split = language.split("_");
+            // 国家，地区
+            locale = new Locale(split[0],split[1]);
+        }
+        return locale;
+    }
+    @Override
+    public void setLocale(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Locale locale) {
+
+    }
+}
+```
+
+- #### 在我们自定义的MyMvcConofig下添加bean；
+
+```java
+// 将自定义的国际化配置放到bean中，自动装配
+@Bean
+public LocaleResolver localeResolver(){
+    return new MyLocaleResolver();
+}
+```
+
+- #### 重启访问即可
 
 
 

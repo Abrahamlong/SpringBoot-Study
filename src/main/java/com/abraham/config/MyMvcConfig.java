@@ -2,14 +2,10 @@ package com.abraham.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.View;
-import org.springframework.web.servlet.ViewResolver;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-import java.util.Locale;
 
 /**
  * @author long
@@ -18,12 +14,26 @@ import java.util.Locale;
  */
 // 扩展SpringMVC
 @Configuration
-@EnableWebMvc
 public class MyMvcConfig implements WebMvcConfigurer {
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         // 浏览器发送/long ， 就会跳转到long页面；
-        registry.addViewController("/long").setViewName("long");
+        registry.addViewController("/").setViewName("index");
+        registry.addViewController("/index").setViewName("index");
+        registry.addViewController("/main").setViewName("dashboard");
+    }
+
+    // 将自定义的国际化配置放到bean中，自动装配
+    @Bean
+    public LocaleResolver localeResolver(){
+        return new MyLocaleResolver();
+    }
+
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginHandlerInterceptor())
+                .addPathPatterns("/**")     // 拦截所有请求
+                .excludePathPatterns("/index","/","/user/login", "/css/**", "/js/**", "/img/**");   // 放行哪些请求
     }
 
     //    @Bean // 放到Bean中，SpringBoot就会帮我们自动装配
