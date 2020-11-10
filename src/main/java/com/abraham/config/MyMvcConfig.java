@@ -29,12 +29,16 @@ public class MyMvcConfig implements WebMvcConfigurer {
         return new MyLocaleResolver();
     }
 
+    /*
+    * 登录拦截器
+    * */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new LoginHandlerInterceptor())
                 .addPathPatterns("/**")     // 拦截所有请求
                 .excludePathPatterns("/index","/","/user/login", "/css/**", "/js/**", "/img/**");   // 放行哪些请求
     }
+
 
     //    @Bean // 放到Bean中，SpringBoot就会帮我们自动装配
 //    public ViewResolver myViewResolver(){
